@@ -49,3 +49,27 @@ class BaremetalFakeBios(
         ]
 
         self.check_bios_apply_and_reset_configuration(self.node, settings)
+
+class BaremetalIdracRedfishBios(
+        bsm.BaremetalStandaloneScenarioTest):
+    
+    driver = 'idrac'
+    bios_interface = 'idrac-redfish'
+    deploy_interface = 'iscsi'
+    image_ref = CONF.baremetal.whole_disk_image_ref
+    wholedisk_image = True
+    delete_node = False
+    api_microversion = '1.40'
+    @decorators.idempotent_id('ef55c44a-cc10-4cf6-8fda-85f0c0793150')
+    def test_bios_apply_and_reset_configuration(self):
+        settings = [
+            {
+                "name": "setting1_name",
+                "value": "setting1_value"
+            },
+            {
+                "name": "setting2_name",
+                "value": "setting2_value"
+            }
+        ]
+        self.check_bios_apply_and_reset_configuration(self.node, settings)
